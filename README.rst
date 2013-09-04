@@ -36,7 +36,35 @@ in the following list:
 * Tests
   
 Contributing
-=============
+====
 
 Feel free to post any comment or suggestion for this project on the project page
 on Github.
+
+Helpful resources
+====
+
+Gestpay documentation
+____
+* https://www.gestpay.it/gestpay/doc/specifiche-tecniche/starter/gestpay_specifiche_tecniche_sicurezza_con_crittografia_2_1_eng.pdf
+
+Gestpypay (Python version of the Java Gestpay Crypt/Decrypt object)
+----
+* https://github.com/giefferre/gestpypay
+
+Very similar implementation of this backend
+----
+* https://github.com/ninjabit/Fotomercato/tree/master/apps/gestpay
+
+Other similar django-shop payment backend plugins
+----
+* https://github.com/jrief/django-shop-ipayment
+* https://github.com/chrisglass/django-shop-postfinance
+
+Other
+-----
+* http://faustinelli.wordpress.com/2011/12/11/banca-sella-ws-for-dummies-i-web-services-di-banca-sella/
+* http://stackoverflow.com/questions/115316/how-can-i-consume-a-wsdl-soap-web-service-in-python
+* https://forum.sella.it/spazioaperto/posts/list/90202.page;jsessionid=CywbRq2SzDL0bj6DPvRKgyzGxJv8STS1PFhP8p66SPrbcfnt8Gzc!256069167
+* https://github.com/akira28/PrestaGestpay
+* http://www.mariaserenapiccioni.com/2010/10/come-criptare-i-dati-da-inviare-a-banca-sella-usando-il-webservice-wscryptdecrypt/
