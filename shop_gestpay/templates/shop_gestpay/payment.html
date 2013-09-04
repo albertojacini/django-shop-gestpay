@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<h1>Gestpay Banca Sella</h1>
+
+<form method="post" action="{{ checkout_action_url }}">{% csrf_token %}
+	<input name="a" type="hidden" value="{{ shop_login }}" />
+	<input name="b" type="hidden" value="{{ encrypted_string }}" />
+	<input type="submit" value="Proceed with payment" name="submit" />
+</form>
