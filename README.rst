@@ -11,18 +11,20 @@ https://www.gestpay.it
 Usage
 ======
 
-Install gestpypay:
+Install gestpypay::
 
-<pre><code>pip install gestpypay</code></pre>
+    pip install gestpypay
 
-Install django-shop-gestpay:
+Install django-shop-gestpay::
 
-<pre><code>pip install django-shop-gestpay</code></pre>
+    pip install django-shop-gestpay
 
 Add both projects to your INSTALLED_APPS.
 
-Add
-'shop_gestpay.offsite_gestpay.OffsiteGestpayBackend' to django-SHOP's
+Add::
+
+    'shop_gestpay.offsite_gestpay.OffsiteGestpayBackend' to django-SHOP's
+
 SHOP_PAYMENT_BACKENDS setting.
 
 Todo
