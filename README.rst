@@ -23,9 +23,9 @@ Add both projects to your INSTALLED_APPS.
 
 Add::
 
-    'shop_gestpay.offsite_gestpay.OffsiteGestpayBackend' to django-SHOP's
+    'shop_gestpay.offsite_gestpay.OffsiteGestpayBackend'
 
-SHOP_PAYMENT_BACKENDS setting.
+to django-SHOP's SHOP_PAYMENT_BACKENDS setting.
 
 Todo
 =====
@@ -56,7 +56,7 @@ Very similar implementation of this backend
 ----
 * https://github.com/ninjabit/Fotomercato/tree/master/apps/gestpay
 
-Other similar django-shop payment backend plugins
+Similar django-shop payment backend plugins
 ----
 * https://github.com/jrief/django-shop-ipayment
 * https://github.com/chrisglass/django-shop-postfinance

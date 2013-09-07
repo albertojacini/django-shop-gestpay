@@ -26,7 +26,6 @@ class OffsiteGestpayBackend(object):
 
     shop_login = settings.GESTPAY_SHOP_LOGIN
     currency_code = settings.GESTPAY_CURRENCY_CODE
-    # debug = getattr(settings, 'GESTPAY_DEBUG', False)
     server = settings.GESTPAY_SERVER
 
     def __init__(self, shop):
@@ -64,7 +63,7 @@ class OffsiteGestpayBackend(object):
 
         # Instantiate Gestpay payment handler (gph)
         gph = gestpypay.GestPayCrypt()
-        gph.Debug = True
+        gph.Debug = settings.DEBUG
         gph.ProtocolAuthServer = 'https'
         gph.DomainName = self.server
 
