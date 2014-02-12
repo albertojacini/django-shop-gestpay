@@ -42,7 +42,7 @@ class OffsiteGestpayBackend(object):
         urlpatterns = patterns('',
             url(r'^$', self.view_that_asks_for_money, name='gestpay_banca_sella'),
             # The complete url: http://iperborea.com/iperboreastore/pay/gestpay_banca_sella/transaction_result_response/
-            url(r'^transaction_result_response/$', self.get_transaction_result_response, name='gespay_transaction_result_response'),
+            url(r'^transaction_result_response/$', self.get_transaction_result_response, name='gestpay_transaction_result_response'),
             url(r'^error/$', self.gestpay_error_view, name='gestpay_error'),
             url(r'^success/$', self.gestpay_success_view, name='gestpay_success')
         )
@@ -111,22 +111,18 @@ class OffsiteGestpayBackend(object):
         if response == 1:
             logging.info('Response from Gestpay: %s ; shopid = %s ; enc_string = %s' % (
                             gph.GetTransactionResult(), gph.GetShopLogin(), gph.GetEncryptedString()))
+            order_id = gph.GetShopTransactionID()
+            order = self.shop.get_order_for_id(order_id)  # Get the order from either the POST or the GET parameters
+            amount = gph.GetAmount()
+            bank_transaction_id = gph.GetBankTransactionID()
+            # This actually records the payment in the shop's database
+            self.shop.confirm_payment(order, amount, bank_transaction_id, self.backend_name)
+            # Respond to Gestpay
+            return HttpResponse('Ok')
         else:
             logging.error('Response from Gestpay Error: %s ; shopid = %s ; enc_string = %s' % (
                             gph.GetErrorDescription(), gph.GetShopLogin(), gph.GetEncryptedString()))
-
-        order_id = gph.GetShopTransactionID()
-        order = self.shop.get_order_for_id(order_id)  # Get the order from either the POST or the GET parameters
-        amount = gph.GetAmount()
-        bank_transaction_id = gph.GetBankTransactionID()
-
-        # This actually records the payment in the shop's database
-        self.shop.confirm_payment(order, amount, bank_transaction_id, self.backend_name)
-
-        # Respond to Gestpay
-        return_result = "<HTML>xxx</HTML>"
-
-        return HttpResponse(return_result)
+            return HttpResponseBadRequest()
 
 
     def gestpay_error_view(self, request):
