@@ -109,7 +109,7 @@ class OffsiteGestpayBackend(object):
         gph.DomainName = self.server
         response = gph.Decrypt()
         if response == 1:
-            logging.error('Response from Gestpay: %s ; shopid = %s ; enc_string = %s' % (
+            logging.info('Response from Gestpay: %s ; shopid = %s ; enc_string = %s' % (
                             gph.GetTransactionResult(), gph.GetShopLogin(), gph.GetEncryptedString()))
             order_id = gph.GetShopTransactionID()
             order = self.shop.get_order_for_id(order_id)  # Get the order from either the POST or the GET parameters
