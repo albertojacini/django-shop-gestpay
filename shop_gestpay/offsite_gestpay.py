@@ -109,16 +109,21 @@ class OffsiteGestpayBackend(object):
         gph.DomainName = self.server
         response = gph.Decrypt()
         if response == 1:
-            logging.info('Response from Gestpay: %s ; shopid = %s ; enc_string = %s' % (
+            logging.error('Response from Gestpay: %s ; shopid = %s ; enc_string = %s' % (
                             gph.GetTransactionResult(), gph.GetShopLogin(), gph.GetEncryptedString()))
             order_id = gph.GetShopTransactionID()
             order = self.shop.get_order_for_id(order_id)  # Get the order from either the POST or the GET parameters
             amount = gph.GetAmount()
             bank_transaction_id = gph.GetBankTransactionID()
-            # This actually records the payment in the shop's database
-            self.shop.confirm_payment(order, amount, bank_transaction_id, self.backend_name)
-            # Respond to Gestpay
-            return HttpResponse('Ok')
+            # See result option from Gestpay server in Gespay docs: https://www.gestpay.it/gestpay/doc/specifiche-tecniche/starter/gestpay_specifiche_tecniche_sicurezza_con_crittografia_2_1_eng.pdf
+            if gph.GetTransactionResult() == 'OK':
+                self.shop.confirm_payment(order, amount, bank_transaction_id, self.backend_name)
+                # Respond to Gestpay
+                return HttpResponse('Received transaction result: OK')
+            elif gph.GetTransactionResult() == 'KO': # Negative transaction
+                return HttpResponse('Received transaction result: KO')
+            elif gph.GetTransactionResult() == 'XX': # Suspended transaction
+                return HttpResponse('Received transaction result: XX')
         else:
             logging.error('Response from Gestpay Error: %s ; shopid = %s ; enc_string = %s' % (
                             gph.GetErrorDescription(), gph.GetShopLogin(), gph.GetEncryptedString()))
